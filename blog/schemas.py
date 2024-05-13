@@ -1,11 +1,18 @@
 from pydantic import BaseModel, EmailStr
 
+class Token(BaseModel):
+  access_token: str
+  token_type: str
+
+class TokenData(BaseModel):
+  username: str | None = None
+
 class ArticleBase(BaseModel):
   title: str
   content: str
 
 class ArticleCreate(ArticleBase):
-  author_id: int
+  username: str
 
 class Article(ArticleBase):
   id: int
@@ -14,7 +21,12 @@ class Article(ArticleBase):
     from_attributes = True
 
 class UserBase(BaseModel):
+  username: str
   email: EmailStr
+
+class UserLogin(BaseModel):
+  username: str
+  password: str
 
 class UserCreate(UserBase):
   password: str
